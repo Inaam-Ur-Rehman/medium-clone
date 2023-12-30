@@ -53,12 +53,12 @@ export default async function Nav() {
               <LoginLink className="hidden btn btn-secondary md:block">
                 Sign in
               </LoginLink>
-              <Link
-                href="/write"
+              <LoginLink
+                href="/s"
                 className="px-2 py-1 text-base text-white bg-black rounded-full md:px-6 md:py-2 btn btn-primary"
               >
                 Get Started
-              </Link>
+              </LoginLink>
             </>
           )}
         </div>

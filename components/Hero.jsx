@@ -10,7 +10,7 @@ const Hero = () => {
             Discover stories, thinking, and expertise from writers on any topic.
           </p>
           <Link
-            className="px-4 py-2 text-white bg-black rounded-full md:px-10 max-w-max"
+            className="px-4 py-2 text-white bg-black rounded-full md:px-10 max-w-max whitespace-nowrap"
             href="/reading"
           >
             Start Reading
