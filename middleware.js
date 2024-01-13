@@ -1,7 +1,15 @@
-import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-export default function middleware(req) {
-  return withAuth(req);
-}
+import { authMiddleware } from "@clerk/nextjs";
+
+export default authMiddleware({
+  publicRoutes: ["/api/webhooks(.*)"],
+});
+
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: [
+    "/articles/[slug]",
+    "/articles/new",
+    "/articles/[slug]/edit",
+    "/dashboard",
+    "/profile",
+  ],
 };

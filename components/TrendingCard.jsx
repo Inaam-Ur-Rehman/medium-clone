@@ -1,32 +1,47 @@
-import Image from "next/image";
+import readingTime from "reading-time";
 import Link from "next/link";
-import React from "react";
+import getImageURL from "@/utils/getImageURL";
 
-const TrendingCard = () => {
+const TrendingCard = ({ article, index }) => {
   return (
     <div className="grid items-start grid-cols-6 justify-items-center">
-      <span className="col-span-1 text-3xl text-black/10">01</span>
+      <span className="col-span-1 text-3xl text-black/10">{index + 1}</span>
       <div className="flex flex-col col-span-5 gap-4">
         <div className="flex items-center gap-1">
-          <Image
-            src="https://miro.medium.com/v2/resize:fill:30:30/1*mDhF9X4VO0rCrJvWFatyxg.png"
+          <img
+            src={getImageURL(article?.author?.image)}
             width={20}
             height={20}
-            className="w-4 h-4 rounded-md"
+            alt="avatar"
+            className="w-6 h-6 rounded-md"
           />
-          <span className="whitespace-nowrap">Bas Wallet</span>
-          <span>in</span>
-          <span className="whitespace-nowrap">UX Collective</span>
+          <span className="whitespace-nowrap">{article?.author?.name}</span>
+          <span className="whitespace-nowrap">{article?.author?.website}</span>
         </div>
         <h2>
-          <Link href="/reading" className="font-bold">
-            The deeper meaning behind Japan’s unique UX design culture
+          <Link href={`/post/${article?.slug}`} className="font-bold">
+            {article?.title}
           </Link>
         </h2>
+        <div className="flex items-center gap-2">
+          {article?.categories?.map((cat) => (
+            <Link
+              className="px-2 rounded-full bg-theme-green/10"
+              href={`/category/${cat?.slug}`}
+            >
+              {cat?.name}
+            </Link>
+          ))}
+        </div>
         <div>
-          <span>Jul 13</span>
+          <span>
+            {new Date(article?.createdAt).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
           <span> · </span>
-          <span>6 min read</span>
+          <span>{readingTime(article?.body).text}</span>
         </div>
       </div>
     </div>

@@ -1,38 +1,46 @@
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
-import Link from "next/link";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+"use client";
 import Image from "next/image";
-export default async function Nav() {
-  const { isAuthenticated, getUser } = getKindeServerSession();
-  const isLogged = await isAuthenticated();
-  const user = await getUser();
+import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignIn, SignInButton } from "@clerk/clerk-react";
+
+export default function Nav() {
   return (
-    <nav className="fixed w-full py-4 border-b-[0.7px] border-black bg-theme-yellow">
+    <nav className="fixed w-full py-4 border-b-[0.7px] z-40 border-black bg-theme-yellow">
       <div className="flex items-center justify-between px-4 md:px-16 ">
-        <Image
-          width={124}
-          height={40}
-          src="/medium.png"
-          className="w-24 h-4"
-          alt="logo"
-        />
+        <Link href="/">
+          <Image
+            width={124}
+            height={40}
+            src="/medium.png"
+            className="w-24 h-4"
+            alt="logo"
+          />
+        </Link>
+        {/* <button onClick={() => signIn()}>Sign in</button> */}
         <div className="flex items-center gap-6">
-          {isLogged ? (
+          <SignedIn>
             <>
               <Link href="/dashboard" className="btn btn-primary">
                 Dashboard
               </Link>
+              <Link href="/profile" className="btn btn-primary">
+                Profile
+              </Link>
+              <Link href="/write" className="hidden btn btn-primary md:block">
+                Write
+              </Link>
+
               <Link
                 href="/dashboard"
                 className="flex items-center justify-center w-6 h-6 text-white bg-black rounded-full btn btn-primary"
               >
-                {user?.given_name[0]}
+                <UserButton afterSignOutUrl="/" />
               </Link>
             </>
-          ) : (
+          </SignedIn>
+
+          <SignedOut>
             <>
               <Link
                 href="/our-story"
@@ -50,14 +58,21 @@ export default async function Nav() {
                 Write
               </Link>
 
-              <LoginLink className="hidden btn btn-secondary md:block">
-                Sign in
-              </LoginLink>
-              <LoginLink className="px-2 py-1 text-base text-white bg-black rounded-full md:px-6 md:py-2 btn btn-primary">
-                Get Started
-              </LoginLink>
+              <SignInButton>
+                <button className="hidden btn btn-secondary md:block">
+                  Sign in
+                </button>
+              </SignInButton>
+              <SignInButton>
+                <button
+                  onCanPlay={SignIn}
+                  className="px-2 py-1 text-base text-white bg-black rounded-full md:px-6 md:py-2 btn btn-primary"
+                >
+                  Get Started
+                </button>
+              </SignInButton>
             </>
-          )}
+          </SignedOut>
         </div>
       </div>
     </nav>
