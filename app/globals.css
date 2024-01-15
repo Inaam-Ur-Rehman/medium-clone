@@ -10,7 +10,6 @@
 .ql-container{
     display: block !important;
     min-height: 60vh;
-    margin: 2rem auto;
 }
 .highlightOption,.highlight,.chip{
     background-color: #1A8917 !important;

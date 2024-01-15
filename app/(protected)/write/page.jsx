@@ -9,9 +9,9 @@ import { createArticle } from "@/utils/actions/article.actions";
 import { getAllCategories } from "@/utils/actions/categories.actions";
 import { useEffect } from "react";
 import Multiselect from "multiselect-react-dropdown";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Write = () => {
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const [value, setValue] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
